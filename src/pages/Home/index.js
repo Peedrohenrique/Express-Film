@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import './home.css';
 import Api from "../../services/api";
+import { Link } from 'react-router-dom'
 
 export default function Home() {
   const [filmes, setFilmes] = useState([]);
@@ -7,7 +9,7 @@ export default function Home() {
   useEffect(() =>{
     async function loadFilmes(){
       const response = await Api.get('r-api/?api=filmes')
-      //console.log(response.data);
+      console.log(response.data);
       setFilmes(response.data);
     }
 
@@ -21,7 +23,10 @@ export default function Home() {
           {filmes.map((filme) =>{
             return (
               <article key={filme.id}>
-                <strong> {filme.id} </strong>
+                <strong> {filme.nome} </strong>
+                <p>{filme.sinopse}</p>
+                <img src={filme.foto}/>
+                <Link to="/">Acessar</Link>
               </article>
             )
           })}
