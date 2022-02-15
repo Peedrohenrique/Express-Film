@@ -12,32 +12,45 @@ export default function Filme() {
   useEffect(() => {
     async function loadFilme() {
       const response = await Api.get(`r-api/?api=filmes/${id}`);
-      if(response.data.length === 0){
-          //Tentou acessar com um ID que não existe, navego ele para home!
-          history.replace('/');
-          return;
+      if (response.data.length === 0) {
+        //Tentou acessar com um ID que não existe, navego ele para home!
+        history.replace('/');
+        return;
       }
       setFilme(response.data);
       setLoading(false);
     }
 
     loadFilme();
-    return() => {
-        console.log('COMPONETE DESMONTADO')
+    return () => {
+      console.log('COMPONETE DESMONTADO')
     }
   }, [history, id]);
 
-  if(loading){
-      return(
-          <div className="filme-info">
-              <h1>Carregando seu filme...</h1>
-          </div>
-      )
+  if (loading) {
+    return (
+      <div className="filme-info">
+        <h1>Carregando seu filme...</h1>
+      </div>
+    )
   }
 
   return (
     <div className="filme-info">
       <h1>{filme.nome}</h1>
+      <img src={filme.foto} alt={filme.nome} />
+
+      <h3>sinopse</h3>
+      {filme.sinopse}
+
+      <div className="botoes">
+        <button onClick={() => { }}>Salvar</button>
+        <button>
+          <a href={`https://www.youtube.com/results?search_query=${filme.nome} Trailer`}>
+          Treiler
+          </a>
+        </button>
+      </div>
     </div>
   );
 };
